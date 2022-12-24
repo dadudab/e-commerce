@@ -3,6 +3,7 @@ package com.server.ecommerce.authentication;
 import com.server.ecommerce.exception.AlreadyExistsException;
 import com.server.ecommerce.exception.BadDataException;
 import com.server.ecommerce.model.User;
+import com.server.ecommerce.model.UserRole;
 import com.server.ecommerce.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -35,6 +39,7 @@ public class AuthenticationService {
                 .username(user.getEmail())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
+                .roles(new HashSet<>())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .build();
         userRepository.save(newUser);

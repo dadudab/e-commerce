@@ -1,10 +1,9 @@
 package com.server.ecommerce.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity(name = "users")
 @AllArgsConstructor
@@ -21,4 +20,11 @@ public class User {
     private String email;
     private String password;
     private String username;
+    @ManyToMany
+    @JoinTable(
+            name = "user_user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id")
+    )
+    private Set<UserRole> roles;
 }
