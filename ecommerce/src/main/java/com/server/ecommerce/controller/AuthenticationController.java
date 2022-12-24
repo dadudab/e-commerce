@@ -2,7 +2,7 @@ package com.server.ecommerce.controller;
 
 import com.server.ecommerce.authentication.AuthenticationRequest;
 import com.server.ecommerce.authentication.AuthenticationService;
-import com.server.ecommerce.authentication.CustomUserDetailsService;
+import com.server.ecommerce.authentication.JwtResponse;
 import com.server.ecommerce.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,12 +17,12 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/auth/register")
-    public void registerUser(@RequestBody User user) {
-        authenticationService.registerUser(user);
+    public JwtResponse registerUser(@RequestBody User user) {
+        return authenticationService.registerUser(user);
     }
 
     @PostMapping("/auth/login")
-    public String loginUser(@RequestBody AuthenticationRequest authenticationRequest) {
+    public JwtResponse loginUser(@RequestBody AuthenticationRequest authenticationRequest) {
         return authenticationService.authenticateUser(authenticationRequest);
     }
 }
