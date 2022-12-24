@@ -1,8 +1,7 @@
 package com.server.ecommerce.service;
 
-import com.server.ecommerce.model.ShopCategory;
+import com.server.ecommerce.entity.ShopCategory;
 
-import java.util.Optional;
 import java.util.Set;
 
 public interface IShopCategoryService {

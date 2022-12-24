@@ -1,4 +1,4 @@
-package com.server.ecommerce.model;
+package com.server.ecommerce.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

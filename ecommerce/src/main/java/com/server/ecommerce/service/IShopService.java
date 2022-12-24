@@ -1,7 +1,6 @@
 package com.server.ecommerce.service;
 
-import com.server.ecommerce.model.Shop;
-import com.server.ecommerce.model.ShopCategory;
+import com.server.ecommerce.entity.Shop;
 
 import java.util.Set;
 

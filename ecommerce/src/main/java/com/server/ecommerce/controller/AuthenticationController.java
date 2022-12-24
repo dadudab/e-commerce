@@ -3,7 +3,7 @@ package com.server.ecommerce.controller;
 import com.server.ecommerce.authentication.AuthenticationRequest;
 import com.server.ecommerce.authentication.AuthenticationService;
 import com.server.ecommerce.authentication.JwtResponse;
-import com.server.ecommerce.model.User;
+import com.server.ecommerce.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
