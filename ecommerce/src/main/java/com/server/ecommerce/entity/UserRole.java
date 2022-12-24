@@ -1,5 +1,6 @@
-package com.server.ecommerce.model;
+package com.server.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,5 +18,6 @@ public class UserRole {
     private Long id;
     private String name;
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     private Set<User> users;
 }

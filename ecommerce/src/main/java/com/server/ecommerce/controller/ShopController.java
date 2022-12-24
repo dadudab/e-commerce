@@ -1,7 +1,6 @@
 package com.server.ecommerce.controller;
 
-import com.server.ecommerce.model.Shop;
-import com.server.ecommerce.model.ShopCategory;
+import com.server.ecommerce.entity.Shop;
 import com.server.ecommerce.service.impl.ShopService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

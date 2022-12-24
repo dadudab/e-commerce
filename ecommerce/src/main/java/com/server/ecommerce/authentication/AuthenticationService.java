@@ -2,18 +2,15 @@ package com.server.ecommerce.authentication;
 
 import com.server.ecommerce.exception.AlreadyExistsException;
 import com.server.ecommerce.exception.AuthBadCredentialsException;
-import com.server.ecommerce.exception.BadDataException;
-import com.server.ecommerce.model.User;
-import com.server.ecommerce.model.UserRole;
+import com.server.ecommerce.entity.User;
 import com.server.ecommerce.repository.UserRepository;
+import com.server.ecommerce.service.impl.UserRoleService;
 import com.server.ecommerce.util.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +25,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final JwtUtils jwtUtils;
+    private final UserRoleService userRoleService;
 
     public JwtResponse registerUser(User user) {
         boolean userExists = userRepository

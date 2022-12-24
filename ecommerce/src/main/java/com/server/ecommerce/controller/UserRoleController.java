@@ -1,6 +1,6 @@
 package com.server.ecommerce.controller;
 
-import com.server.ecommerce.model.UserRole;
+import com.server.ecommerce.entity.UserRole;
 import com.server.ecommerce.service.impl.UserRoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
