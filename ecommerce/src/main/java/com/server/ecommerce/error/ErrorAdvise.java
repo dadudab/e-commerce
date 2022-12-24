@@ -1,6 +1,7 @@
 package com.server.ecommerce.error;
 
 import com.server.ecommerce.exception.AlreadyExistsException;
+import com.server.ecommerce.exception.AuthBadCredentialsException;
 import com.server.ecommerce.exception.BadDataException;
 import com.server.ecommerce.exception.DataNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,16 @@ public class ErrorAdvise {
         return errorResponse;
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(AlreadyExistsException.class)
     public ErrorResponse alreadyExistsException(AlreadyExistsException e) {
+        ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+        return errorResponse;
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AuthBadCredentialsException.class)
+    public ErrorResponse authBadCredentialsException(AuthBadCredentialsException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
         return errorResponse;
     }

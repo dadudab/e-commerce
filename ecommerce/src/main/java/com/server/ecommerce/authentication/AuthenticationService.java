@@ -1,10 +1,12 @@
 package com.server.ecommerce.authentication;
 
 import com.server.ecommerce.exception.AlreadyExistsException;
+import com.server.ecommerce.exception.AuthBadCredentialsException;
 import com.server.ecommerce.exception.BadDataException;
 import com.server.ecommerce.model.User;
 import com.server.ecommerce.model.UserRole;
 import com.server.ecommerce.repository.UserRepository;
+import com.server.ecommerce.util.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -26,14 +27,14 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
+    private final JwtUtils jwtUtils;
 
-    public String registerUser(User user) {
+    public JwtResponse registerUser(User user) {
         boolean userExists = userRepository
                 .existsByUsername(user.getEmail());
         if (userExists) {
             throw new AlreadyExistsException("User already exists");
         }
-
         User newUser = User.builder()
                 .email(user.getEmail())
                 .username(user.getEmail())
@@ -43,14 +44,14 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(user.getPassword()))
                 .build();
         userRepository.save(newUser);
-
-        return "success";
+        UserDetails userDetails = new CustomUserDetails(newUser, new HashSet<>());
+        final String token =  jwtUtils.generateToken(userDetails);
+        return new JwtResponse(token);
     }
 
-    public String authenticateUser(AuthenticationRequest authenticationRequest) {
+    public JwtResponse authenticateUser(AuthenticationRequest authenticationRequest) {
         UserDetails userDetails =
                 customUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-
         try {
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(
@@ -60,8 +61,9 @@ public class AuthenticationService {
                             );
             authenticationManager.authenticate(authentication);
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Wrong password or email");
+            throw new AuthBadCredentialsException("Wrong email or password");
         }
-        return "AUTH SUCCESS";
+        final String token = jwtUtils.generateToken(userDetails);
+        return new JwtResponse(token);
     }
 }
